@@ -51,6 +51,9 @@ function backup {
         ;;
     esac
 
+    # Generate Folder (if it doesnt exist)
+    mkdir -p "${BACKUP_DIR}"
+
     cd /backup/customer/$CUSTOMER/
     
     eval "$(egrep -v '^#' .env | xargs)"
@@ -77,9 +80,6 @@ function backup {
 
     # Retrieve a list of all databases
     databases=`$MYSQL -u$MYSQL_USER -p$MYSQL_PASSWORD -e "SHOW DATABASES;" | grep -Ev "($SKIPDATABASES)"`
-
-    # Generate Folder (if it doesnt exist)
-    mkdir -p "${BACKUP_DIR}"
 
     # Dumb the databases in seperate names and gzip the .sql file
     for db in $databases; do
