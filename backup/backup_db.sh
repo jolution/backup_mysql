@@ -17,14 +17,28 @@ if [ $# -lt 1 ]; then
 fi
 
 # General settings
-
 HOST_DB=127.0.0.1
-CUSTOMERLIST=name_folder_here
 PERIOD=$1
 
 # MySQL executable locations (no need to change this)
 MYSQL=/usr/bin/mysql
 MYSQLDUMP=/usr/bin/mysqldump
+
+cd /backup/
+if test -f "/backup/.env"
+then
+    eval "$(egrep -v '^#' .env | xargs)"
+
+    if [ -z "$CUSTOMERLIST" ]
+    then
+        echo "No Customerlist found, exit"
+        exit 1
+    fi
+
+else
+    echo "/backup/.env doesnt exists, skip backup"
+    exit 1
+fi
 
 function backup {
 
