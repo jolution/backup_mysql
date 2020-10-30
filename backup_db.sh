@@ -51,13 +51,19 @@ function backup {
         ;;
     esac
 
+    cd /backup/customer/$CUSTOMER/
+
+    if test -f "/backup/customer/$CUSTOMER/.env"
+    then
+        eval "$(egrep -v '^#' .env | xargs)"
+    else
+        echo ".env doesnt exists, skip backup"
+        exit 1
+    fi
+
     # Generate Folder (if it doesnt exist)
     mkdir -p "${BACKUP_DIR}"
-
-    cd /backup/customer/$CUSTOMER/
     
-    eval "$(egrep -v '^#' .env | xargs)"
-
     FILE_PREFIX=`date +\%Y-\%m-\%d_\%H-\%M-\%S`
     BACKUP_DIR="/backup/customer/${CUSTOMER}/mysql/${PERIOD}/"
 
