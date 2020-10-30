@@ -75,7 +75,7 @@ function backup {
     then
         eval "$(egrep -v '^#' .env | xargs)"
     else
-        echo ".env doesnt exists, skip backup"
+        echo "/backup/customer/$CUSTOMER/.env doesnt exists, skip backup"
         exit 1
     fi
 
