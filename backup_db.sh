@@ -19,8 +19,12 @@ fi
 # General settings
 
 HOST_DB=127.0.0.1
-CUSTOMERLIST=folder_name_here
+CUSTOMERLIST=name_folder_here
 PERIOD=$1
+
+# MySQL executable locations (no need to change this)
+MYSQL=/usr/bin/mysql
+MYSQLDUMP=/usr/bin/mysqldump
 
 function backup {
 
