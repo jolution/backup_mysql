@@ -1,4 +1,4 @@
-# backup_mysql
+# backup db/mysql
 Backup Script for Mysql
 
 # Install
