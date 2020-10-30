@@ -61,11 +61,11 @@ function backup {
         exit 1
     fi
 
-    # Generate Folder (if it doesnt exist)
-    mkdir -p "${BACKUP_DIR}"
-    
     FILE_PREFIX=`date +\%Y-\%m-\%d_\%H-\%M-\%S`
     BACKUP_DIR="/backup/customer/${CUSTOMER}/mysql/${PERIOD}/"
+
+    # Generate Folder (if it doesnt exist)
+    mkdir -p "${BACKUP_DIR}"
 
     # Skip Databases
     SKIPDATABASES_GENERAL="Database|information_schema|performance_schema|mysql"
