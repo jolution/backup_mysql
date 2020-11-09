@@ -8,7 +8,7 @@
 #  |__/                                 
 #
 # Backup/MySQL
-# v0.1
+# v0.2
 # Alpha Version, not for production systems
 
 if [ $# -lt 1 ]; then
@@ -17,7 +17,6 @@ if [ $# -lt 1 ]; then
 fi
 
 # General settings
-HOST_DB=127.0.0.1
 PERIOD=$1
 
 # MySQL executable locations (no need to change this)
@@ -107,8 +106,12 @@ function backup {
 
     # Dumb the databases in seperate names and gzip the .sql file
     for db in $databases; do
-        #mysqldump -h ${HOST_DB} -u ${MYSQL_USER} -p${MYSQL_PASSWORD} ${db} > $BACKUP_DIR/$DATE/${FILE_PREFIX}_${db}.sql;
-        mysqldump -h ${HOST_DB} -u ${MYSQL_USER} -p${MYSQL_PASSWORD} ${db} | gzip > $BACKUP_DIR/${FILE_PREFIX}_${db}.sql.gz;
+        mysqldump --defaults-extra-file=/backup/customer/$CUSTOMER/mysqldump.cnf ${db} | gzip > $BACKUP_DIR/${FILE_PREFIX}_${db}.sql.gz;
+
+        if [ -z "$ZIP_PWD" ]
+        then
+            mysqldump --defaults-extra-file=/backup/customer/$CUSTOMER/mysqldump.cnf ${db} | gzip | openssl enc -aes-256-cbc -md sha512 -pbkdf2 -iter 100000 -salt -pass pass:"${ZIP_PWD}" -e -out $BACKUP_DIR/${FILE_PREFIX}_${db}.enc.sql.gz
+        fi
     done
 
 }
