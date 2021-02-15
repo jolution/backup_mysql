@@ -4,6 +4,7 @@ Backup Script for Mysql
 # Install
 * Download files/folder in /backup on your backup server
 * After testing, insert the following cron-jobs with `Crontab -e` or https://console.cron-job.org/login (not mine)
+* chmod +x FILENAME
 
 ## keep one daily backup for each of the last 7 days (At 04:00)
 0 4   *   *   *   /backup/backup_db.sh daily
