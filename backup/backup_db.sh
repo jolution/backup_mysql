@@ -8,7 +8,7 @@
 #  |__/                                 
 #
 # Backup/MySQL
-# v0.2
+# v0.0.2
 # Alpha Version, not for production systems
 
 if [ $# -lt 1 ]; then
